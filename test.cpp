@@ -24,9 +24,10 @@ public:
 };
 
 int main() {
-	simple_task* t = new simple_task();
 	arsenal::Timer timer;
 	timer.init();
+
+	simple_task* t = new simple_task();
 	timer.schedule(t, arsenal::Timeval(0, 0), arsenal::Timeval(3, 0));
 
 	hello_task* ht = new hello_task();
