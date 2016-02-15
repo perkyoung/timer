@@ -88,30 +88,30 @@ void* Timer::thread_fun(void* arg) {
 
 int Timer::run_all_expire_task(const Timeval& now) {
 
-	std::list<TimerItem*>::iterator iter = timers_.begin(), iterend = timers_.end();
+	std::list<TimerItem*>::iterator iter = timers_.begin(), iter_end = timers_.end();
 	std::list<TimerItem*> new_task;
 
-	while(iter != iterend) {
+	while(iter !=iter_end) {
 		if((*iter)->expire_ > now) {
 			//任务已经排序, 第一个任务未超时, 则所有的都未超时
 			break;
 		}
 
-		TimerItem* timer_task= *iter;
-		timer_task->task_->run();
-		if(timer_task->is_repeat()) {
+		TimerItem* timer_item = *iter;
+		timer_item->task_->run();
+		if(timer_item->is_repeat()) {
 			Timeval now;
 			gettimeofday(now);
-			TimerItem* temp = new TimerItem(timer_task->task_, timer_task->interval_, now + timer_task->interval_);
+			TimerItem* temp = new TimerItem(timer_item->task_, timer_item->interval_, now + timer_item->interval_);
 			new_task.push_back(temp);
 		} else {
-			delete timer_task;
+			delete timer_item;
 		}
 		timers_.erase(iter++);
 	}
 
-	iter = new_task.begin(), iterend = new_task.end();
-	while(iter != iterend) {
+	iter = new_task.begin(), iter_end = new_task.end();
+	while(iter !=iter_end) {
 		schedule(*iter);
 		iter++;
 	}
@@ -119,8 +119,8 @@ int Timer::run_all_expire_task(const Timeval& now) {
 }
 
 int Timer::schedule(TimerItem* t) {
-	std::list<TimerItem*>::iterator iter = timers_.begin(), iterend = timers_.end();
-	while(iter != iterend) {
+	std::list<TimerItem*>::iterator iter = timers_.begin(), iter_end = timers_.end();
+	while(iter != iter_end) {
 		if((*iter)->expire_ > t->expire_) {
 			break;
 		}
