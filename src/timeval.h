@@ -14,8 +14,7 @@ public:
 	Timeval operator+ (const Timeval& t);
 	bool operator> (const Timeval& t);
 	bool operator== (const Timeval& t);
-	Timeval& operator()(time_t sec, time_t usec);
-
+	void operator()(time_t sec, time_t usec);
 
 private:
 	void normalize();

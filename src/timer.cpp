@@ -82,8 +82,6 @@ int Timer::wait_and_run() {
 		run_all_expire_task(now);
 
 		pthread_mutex_unlock(&cs_);
-
-
 	}
 	pthread_exit(0);
 }

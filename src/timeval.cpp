@@ -9,11 +9,10 @@ Timeval::Timeval(time_t sec, time_t usec)
 	normalize();
 }
 
-Timeval& Timeval::operator()(time_t sec, time_t usec) {
+void Timeval::operator()(time_t sec, time_t usec) {
 	sec_ = sec;
 	usec_ = usec;
 	normalize();
-	return *this;
 }
 
 void Timeval::normalize() {
