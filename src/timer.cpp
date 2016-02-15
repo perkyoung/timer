@@ -12,12 +12,12 @@ int Timer::init() {
 	if(err != 0) {
 		return -1;
 	}
+
+	is_stop_ = false;
 	err = pthread_create(&timer_thread_id_, 0, thread_fun, this);
 	if(err != 0) {
 		return -1;
 	}
-
-	is_stop_ = false;
 
 	return 0;
 }
