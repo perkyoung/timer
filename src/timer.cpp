@@ -2,6 +2,14 @@
 
 namespace arsenal {
 
+Timer::~Timer() {
+	std::list<TimerItem*>::iterator iter = timers_.begin(), iter_end = timers_.end();
+	while(iter != iter_end) {
+		delete *iter;
+		iter++;
+	}
+}
+
 int Timer::init() {
 	int err = pthread_mutex_init(&cs_, 0);
 	if(err != 0) {

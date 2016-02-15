@@ -2,7 +2,8 @@
 #include "src/task.h"
 #include "src/timer.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 class simple_task : public arsenal::Task {
 public:

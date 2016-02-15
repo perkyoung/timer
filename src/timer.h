@@ -11,6 +11,7 @@ namespace arsenal {
 
 class Timer {
 public:
+	~Timer();
 	int init();
 	int schedule(Task*, const Timeval&, const Timeval&);
 	int destroy();
