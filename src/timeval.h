@@ -25,7 +25,7 @@ private:
 	time_t usec_;
 };
 
-extern void gettimeofday(Timeval& now);
+void gettimeofday(Timeval& now);
 
 inline time_t Timeval::sec() {
 	return sec_;

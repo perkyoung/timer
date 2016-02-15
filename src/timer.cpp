@@ -36,6 +36,20 @@ int Timer::schedule(Task* t, const Timeval& delay, const Timeval& interval) {
 	return 0;
 }
 
+int Timer::destroy() {
+	is_stop_ = true;
+	pthread_cond_signal(&cv_);
+
+	int err = pthread_join(timer_thread_id_, 0);
+	if(err != 0) {
+		return -1;
+	}
+
+	pthread_mutex_destroy(&cs_);
+	pthread_cond_destroy(&cv_);
+	return 0;
+}
+
 int Timer::wait_and_run() {
 	while(!is_stop_) {
 		Timeval now;

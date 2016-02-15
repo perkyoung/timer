@@ -13,6 +13,7 @@ class Timer {
 public:
 	int init();
 	int schedule(Task*, const Timeval&, const Timeval&);
+	int destroy();
 private:
 	int schedule(TimerItem* );
 	int wait_and_run();

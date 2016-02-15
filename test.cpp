@@ -33,8 +33,8 @@ int main() {
 	hello_task* ht = new hello_task();
 	timer.schedule(ht, arsenal::Timeval(0, 0), arsenal::Timeval(1, 0));
 
-	while(1) {
-		sleep(1);
-	}
+	sleep(5);
+	timer.destroy();
+
 	return 0;
 }
