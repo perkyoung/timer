@@ -9,9 +9,9 @@
 
 namespace arsenal {
 
-class Timer {
+class IntervalTimer {
 public:
-	~Timer();
+	~IntervalTimer();
 	int init();
 	int schedule(Task*, const Timeval&, const Timeval&);
 	int destroy();

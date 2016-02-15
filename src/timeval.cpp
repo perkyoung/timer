@@ -44,5 +44,4 @@ void gettimeofday(Timeval& now) {
 	now(temp.tv_sec, temp.tv_usec);
 }
 
-
 }

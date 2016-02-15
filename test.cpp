@@ -1,6 +1,7 @@
 #include <iostream>
 #include "src/task.h"
-#include "src/timer.h"
+#include "src/timeval.h"
+#include "src/interval_timer.h"
 
 using std::cout;
 using std::endl;
@@ -25,7 +26,7 @@ public:
 };
 
 int main() {
-	arsenal::Timer timer;
+	arsenal::IntervalTimer timer;
 	timer.init();
 
 	simple_task* t = new simple_task();

@@ -1,8 +1,8 @@
-#include "timer.h"
+#include "interval_timer.h"
 
 namespace arsenal {
 
-Timer::~Timer() {
+IntervalTimer::~IntervalTimer() {
 	std::list<TimerItem*>::iterator iter = timers_.begin(), iter_end = timers_.end();
 	while(iter != iter_end) {
 		delete *iter;
@@ -10,7 +10,7 @@ Timer::~Timer() {
 	}
 }
 
-int Timer::init() {
+int IntervalTimer::init() {
 	int err = pthread_mutex_init(&cs_, 0);
 	if(err != 0) {
 		return -1;
@@ -30,7 +30,7 @@ int Timer::init() {
 	return 0;
 }
 
-int Timer::schedule(Task* t, const Timeval& delay, const Timeval& interval) {
+int IntervalTimer::schedule(Task* t, const Timeval& delay, const Timeval& interval) {
 	pthread_mutex_lock(&cs_);
 
 	Timeval now;
@@ -44,7 +44,7 @@ int Timer::schedule(Task* t, const Timeval& delay, const Timeval& interval) {
 	return 0;
 }
 
-int Timer::destroy() {
+int IntervalTimer::destroy() {
 	is_stop_ = true;
 	pthread_cond_signal(&cv_);
 
@@ -58,7 +58,7 @@ int Timer::destroy() {
 	return 0;
 }
 
-int Timer::wait_and_run() {
+int IntervalTimer::wait_and_run() {
 	while(!is_stop_) {
 		Timeval now;
 		gettimeofday(now);
@@ -86,13 +86,13 @@ int Timer::wait_and_run() {
 	pthread_exit(0);
 }
 
-void* Timer::thread_fun(void* arg) {
-	Timer* timer = static_cast<Timer*> (arg);
+void* IntervalTimer::thread_fun(void* arg) {
+	IntervalTimer* timer = static_cast<IntervalTimer*> (arg);
 	timer->wait_and_run();
 	return NULL;
 }
 
-int Timer::run_all_expire_task(const Timeval& now) {
+int IntervalTimer::run_all_expire_task(const Timeval& now) {
 
 	std::list<TimerItem*>::iterator iter = timers_.begin(), iter_end = timers_.end();
 	std::list<TimerItem*> new_task;
@@ -124,7 +124,7 @@ int Timer::run_all_expire_task(const Timeval& now) {
 	return 0;
 }
 
-int Timer::schedule(TimerItem* t) {
+int IntervalTimer::schedule(TimerItem* t) {
 	std::list<TimerItem*>::iterator iter = timers_.begin(), iter_end = timers_.end();
 	while(iter != iter_end) {
 		if((*iter)->expire_ > t->expire_) {
